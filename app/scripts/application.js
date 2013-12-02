@@ -1,11 +1,14 @@
 define([
+  'jquery',
 	'backbone',
 	'communicator',
-	'hbs!tmpl/welcome'
+	'hbs!tmpl/welcome',
+  'collections/field',
+  'views/composite/field'
 ],
 
-function( Backbone, Communicator, Welcome_tmpl ) {
-    'use strict';
+function($, Backbone, Communicator, Welcome_tmpl, Field, FieldView ) {
+  'use strict';
 
 	var welcomeTmpl = Welcome_tmpl;
 
@@ -14,11 +17,12 @@ function( Backbone, Communicator, Welcome_tmpl ) {
 	/* Add application regions here */
 	App.addRegions({});
 
-	/* Add initializers here */
-	App.addInitializer( function () {
-		document.body.innerHTML = welcomeTmpl({ success: "CONGRATS!" });
-		Communicator.mediator.trigger("APP:START");
-	});
+  App.addInitializer(function() {
+    // Pass null model collection, because Field calss generate models by itself.
+    var field = new Field(null, { height: 30, width: 30 });
+    var fieldView = new FieldView({ collection: field });
+    $(document.body).append(fieldView.render().el);
+  });
 
 	return App;
 });

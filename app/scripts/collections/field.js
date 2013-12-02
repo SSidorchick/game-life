@@ -7,7 +7,9 @@ function( Backbone, _, Cell ) {
   'use strict';
 
 	return Backbone.Collection.extend({
-		initialize: function(options) {
+    model: Cell,
+
+		initialize: function(models, options) {
       this.height = options.height;
       this.width = options.width;
 
