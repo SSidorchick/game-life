@@ -2,25 +2,21 @@ define([
   'jquery',
 	'backbone',
 	'communicator',
-	'hbs!tmpl/welcome',
-  'collections/field',
-  'views/composite/field'
+  'routers/main'
 ],
 
-function($, Backbone, Communicator, Field, FieldView ) {
+function($, Backbone, Communicator, MainRouter) {
   'use strict';
 
 	var App = new Backbone.Marionette.Application();
 
 	/* Add application regions here */
-	App.addRegions({});
+  App.addRegions({});
 
   App.addInitializer(function() {
-    // Pass null model collection, because Field calss generate models by itself.
-    var field = new Field(null, { height: 30, width: 30 });
-    var fieldView = new FieldView({ collection: field });
-    $(document.body).append(fieldView.render().el);
+    new MainRouter();
+    Backbone.history.start();
   });
-
-	return App;
+  
+  return App;
 });
