@@ -5,12 +5,12 @@ function( Backbone ) {
   'use strict';
 
 	return Backbone.Model.extend({
-      defaults: {
-        isAlive: false,
-      },
+    defaults: {
+      isAlive: false,
+    },
 
-      toggleAlive: function() {
-        this.set('isAlive', !this.get('isAlive'));
-      }
+    toggleAlive: function() {
+      this.set('isAlive', !this.get('isAlive'));
+    }
   });
 });

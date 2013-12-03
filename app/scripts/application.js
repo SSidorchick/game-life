@@ -7,10 +7,8 @@ define([
   'views/composite/field'
 ],
 
-function($, Backbone, Communicator, Welcome_tmpl, Field, FieldView ) {
+function($, Backbone, Communicator, Field, FieldView ) {
   'use strict';
-
-	var welcomeTmpl = Welcome_tmpl;
 
 	var App = new Backbone.Marionette.Application();
 

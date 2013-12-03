@@ -15,7 +15,6 @@ function( Backbone, CellView, FieldTmpl ) {
     },
 
     initialize: function() {
-      console.log("initialize a Field CollectionView");
       this.offsetY = this.el.offsetTop;
       this.offsetX = this.el.offsetLeft;
     },
@@ -29,7 +28,6 @@ function( Backbone, CellView, FieldTmpl ) {
 
       var child = this.children.findByIndex(Math.floor(y / 10) * 30 + Math.floor(x / 10));
       child.model.toggleAlive();
-      //child.$el.toggleClass('alive');
     }
   });
 });
