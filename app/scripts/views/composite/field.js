@@ -28,7 +28,8 @@ function( Backbone, CellView, FieldTmpl ) {
       var y = e.clientY - this.$itemViewContainer.offset().top;
 
       var child = this.children.findByIndex(Math.floor(y / 10) * 30 + Math.floor(x / 10));
-      child.$el.toggleClass('alive');
+      child.model.toggleAlive();
+      //child.$el.toggleClass('alive');
     }
   });
 });

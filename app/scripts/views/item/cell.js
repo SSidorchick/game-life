@@ -6,14 +6,14 @@ function( Backbone, CellTmpl  ) {
   'use strict';
 
   return Backbone.Marionette.ItemView.extend({
+    className: 'cell',
     template: CellTmpl,
-
-    initialize: function() {
-      console.log("initialize a Cell ItemView");
+    modelEvents: {
+      'change': 'render'
     },
 
     onRender: function() {
-      this.setElement(this.$el.children());
+      this.$el.toggleClass('alive', this.model.get('isAlive'));
     }
   });
 });
