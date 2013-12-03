@@ -12,7 +12,6 @@ function( Backbone, CellTmpl  ) {
       console.log("initialize a Cell ItemView");
     },
 
-    /* on render callback */
     onRender: function() {
       this.setElement(this.$el.children());
     }
