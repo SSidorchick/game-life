@@ -21,7 +21,7 @@ function( Backbone, ControlsTmpl ) {
     stopClickHandler: function(e) {
       e.preventDefault();
 
-      this._processStartClick();
+      this._processStopClick();
     },
 
     _processStartClick: function() {
