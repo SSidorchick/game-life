@@ -11,6 +11,7 @@ define(function() {
 		'spec/routers/main.js',
 		'spec/views/collection/field.js',
 		'spec/views/item/cell.js',
+		'spec/views/item/controls.js',
 		'spec/views/layout/main.js'
 		]
 	};

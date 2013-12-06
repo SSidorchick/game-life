@@ -8,6 +8,7 @@ function( Backbone, MainTmpl ) {
 	return Backbone.Marionette.Layout.extend({
     template: MainTmpl,
     regions: {
+      controls: '#controls',
       field: '#field'
     }
 	});
