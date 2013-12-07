@@ -29,18 +29,22 @@ function($, Backbone, Field, AppRegion, MainLayout, ControlsView, FieldView) {
 
     _createFieldView: function() {
       // Pass null model collection, because Field calss generate models by itself.
-      var field = new Field(null, { height: 30, width: 30 });
-      var fieldView = new FieldView({ collection: field });
+      this.field = new Field(null, { height: 30, width: 30 });
+      var fieldView = new FieldView({ collection: this.field });
 
       return fieldView;
     },
 
     _start: function() {
+      this.intervalId = setInterval(function() {
+        this.field.runStep();
+      }.bind(this), 1000);
       console.log('started');
     },
 
     _stop: function() {
       console.log('stopped');
+      clearInterval(this.intervalId);
     }
 	});
 });
