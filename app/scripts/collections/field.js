@@ -19,14 +19,21 @@ function( Backbone, _, Cell ) {
         }
       }
 
-      for (i = 0; i < this.height; i++) {
-        for (j = 0; j < this.width; j++) {
+      for (var i = 0; i < this.height; i++) {
+        for (var j = 0; j < this.width; j++) {
           var cell = this.at(i * 10 + j);
           var neighbours = this._getNeighbours(i, j);
           cell.set('neighbours', neighbours);
         }
       }
 		},
+
+    runStep: function() {
+      for (var i = 0; i < this.length; i++) {
+        var cell = this.at(i);
+        cell.runStep();
+      }
+    },
 
     _getNeighbours: function(i, j) {
       var neighbours = [];
