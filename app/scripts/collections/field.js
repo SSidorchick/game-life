@@ -31,7 +31,12 @@ function( Backbone, _, Cell ) {
     runStep: function() {
       for (var i = 0; i < this.length; i++) {
         var cell = this.at(i);
-        cell.runStep();
+        cell.generateNextState();
+      }
+
+      for (var i = 0; i < this.length; i++) {
+        var cell = this.at(i);
+        cell.switchNextState();
       }
     },
 

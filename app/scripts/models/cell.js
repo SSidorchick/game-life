@@ -14,14 +14,18 @@ function( Backbone, _) {
       this.set('isAlive', !this.get('isAlive'));
     },
 
-    runStep: function() {
+    generateNextState: function() {
       var aliveNeighboursCount = this._getAliveNegiboursCount();
 
       if (this.get('isAlive') && (aliveNeighboursCount < 2 || aliveNeighboursCount > 3)) {
-        this.set('isAlive', false);
+        this.nextState = false;
       } else if (!this.get('isAlive') && aliveNeighboursCount === 3) {
-        this.set('isAlive', true);
+        this.nextState = true;
       }
+    },
+
+    switchNextState: function() {
+      this.set('isAlive', this.nextState);
     },
 
     _getAliveNegiboursCount: function() {
