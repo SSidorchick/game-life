@@ -21,7 +21,7 @@ function( Backbone, _, Cell ) {
 
       for (var i = 0; i < this.height; i++) {
         for (var j = 0; j < this.width; j++) {
-          var cell = this.at(i * 10 + j);
+          var cell = this.at(i * this.width + j);
           var neighbours = this._getNeighbours(i, j);
           cell.set('neighbours', neighbours);
         }
@@ -44,23 +44,39 @@ function( Backbone, _, Cell ) {
       var neighbours = [];
 
       // top
-      neighbours.push(this.at((i - 1) * 10 + j));
+      if (i - 1 >= 0 && j < this.width) {
+        neighbours.push(this.at((i - 1) * this.width + j));
+      }
       // top-right
-      neighbours.push(this.at((i - 1) * 10 + j + 1));
+      if (i - 1 >= 0 && j + 1 < this.width) {
+        neighbours.push(this.at((i - 1) * this.width + j + 1));
+      }
       // right
-      neighbours.push(this.at(i * 10 + j + 1));
+      if (j + 1 < this.width) {
+        neighbours.push(this.at(i * this.width + j + 1));
+      }
       // bottom-right
-      neighbours.push(this.at((i + 1) + j + 1));
+      if (i + 1 < this.height && j + 1 < this.width) {
+        neighbours.push(this.at((i + 1) * this.width + j + 1));
+      }
       // bottom
-      neighbours.push(this.at((i + 1) + j));
+      if (i + 1 < this.height) {
+        neighbours.push(this.at((i + 1) * this.width + j));
+      }
       // bottom-left
-      neighbours.push(this.at((i + 1) + j - 1));
+      if (i + 1 < this.height && j - 1 >= 0) {
+        neighbours.push(this.at((i + 1) * this.width + j - 1));
+      }
       // left
-      neighbours.push(this.at(i * 10 + j - 1));
+      if (j - 1 >= 0) {
+        neighbours.push(this.at(i * this.width + j - 1));
+      }
       // top-left
-      neighbours.push(this.at((i - 1) + j - 1));
+      if (i - 1 >= 0 && j - 1 >= 0) {
+        neighbours.push(this.at((i - 1) * this.width + j - 1));
+      }
 
-      return _.compact(neighbours);
+      return neighbours;
     }
 	});
 });
