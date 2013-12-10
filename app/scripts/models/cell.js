@@ -21,6 +21,8 @@ function( Backbone, _) {
         this.nextState = false;
       } else if (!this.get('isAlive') && aliveNeighboursCount === 3) {
         this.nextState = true;
+      } else {
+        this.nextState = this.get('isAlive');
       }
     },
 
