@@ -4,20 +4,39 @@
 	var root = this;
 
 	root.define([
-		'views/item/cell'
+		'views/item/cell',
+    'models/cell'
 		],
-		function( Cell ) {
+		function( CellView, CellModel ) {
 
-			describe('Cell Itemview', function () {
+			describe('Cell ItemView', function () {
+        beforeEach(function() {
+          root.model = new CellModel();
+          root.cell = new CellView({ model: root.model });
+          root.cell.render();
+        });
+
+        afterEach(function() {
+          delete root.cell;
+          delete root.model;
+        });
 
 				it('should be an instance of Cell Itemview', function () {
-					var cell = new Cell();
-					expect( cell ).to.be.an.instanceof( Cell );
+					root.cell.should.be.an.instanceof(CellView);
 				});
 
-				it('should have more test written', function(){
-					expect( false ).to.be.ok;
-				});
+        it('should render default layout', function() {
+          root.cell.$el.html().should.equal('');
+        });
+
+        it('should add/remove alive class when model isAlive property changed', function() {
+          root.cell.$el.hasClass('alive').should.be.false;
+          root.model.set('isAlive', true);
+          root.cell.$el.hasClass('alive').should.be.true;
+          root.model.set('isAlive', false);
+          root.cell.$el.hasClass('alive').should.be.false;
+        });
+
 			});
 
 		});
