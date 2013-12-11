@@ -12,12 +12,13 @@
 
 				it('should be an instance of Main Router', function () {
 					var main = new Main();
-					expect( main ).to.be.an.instanceof( Main );
+					main.should.be.an.instanceof(Main);
 				});
 
-				it('should have more test written', function(){
-					expect( false ).to.be.ok;
-				});
+        it('should trigger index Main Controllers method when navigate to root', function() {
+          false.should.be.ok;
+        });
+
 			});
 
 		});

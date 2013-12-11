@@ -12,7 +12,7 @@
 
 				it('should be an instance of Field Collectionview', function () {
 					var field = new Field();
-					expect( field ).to.be.an.instanceof( Field );
+					field.should.be.an.instanceof(Field);
 				});
 
 				it('should have more test written', function(){
