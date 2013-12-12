@@ -40,21 +40,23 @@ function($, Backbone, Controls, Field, AppRegion, MainLayout, ControlsView, Fiel
     },
 
     _start: function() {
-      this.intervalId = setInterval(function() {
-        this.field.runStep();
-      }.bind(this), this.controls.get('speed'));
-      console.log('started');
+      this.controls.set('running', true);
+      this._processField();
     },
 
     _stop: function() {
-      console.log('stopped');
-      clearInterval(this.intervalId);
+      this.controls.set('running', false);
+    },
+
+    _processField: function() {
+      if (this.controls.get('running')) {
+        this.field.runStep();
+        setTimeout(this._processField.bind(this), this.controls.get('speed'));
+      }
     },
 
     _changeSpeed: function(delta) {
-      this._stop();
       this.controls.changeSpeed(delta);
-      this._start();
     }
 	});
 });

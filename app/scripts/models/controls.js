@@ -6,6 +6,7 @@ function( Backbone ) {
 
 	return Backbone.Model.extend({
 		defaults: {
+      running: false,
       speed: 500
     },
 
