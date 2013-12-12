@@ -1,13 +1,14 @@
 define([
   'jquery',
   'backbone',
+  'models/controls',
   'collections/field',
   'regions/app',
   'views/layout/main',
   'views/item/controls',
   'views/collection/field'
 ],
-function($, Backbone, Field, AppRegion, MainLayout, ControlsView, FieldView) {
+function($, Backbone, Controls, Field, AppRegion, MainLayout, ControlsView, FieldView) {
   'use strict';
 
 	return Backbone.Marionette.Controller.extend({
@@ -15,14 +16,17 @@ function($, Backbone, Field, AppRegion, MainLayout, ControlsView, FieldView) {
       var mainLayot = new MainLayout();
       AppRegion.show(mainLayot);
 
-      mainLayot.controls.show(this._createControlsView());
+      this.controls = new Controls();
+      mainLayot.controls.show(this._createControlsView(this.controls));
       mainLayot.field.show(this._createFieldView());
     },
 
-    _createControlsView: function() {
-      var controlsView = new ControlsView();
+    _createControlsView: function(model) {
+      var controlsView = new ControlsView({ model: model });
       this.listenTo(controlsView, 'controls:start', this._start);
       this.listenTo(controlsView, 'controls:stop', this._stop);
+      this.listenTo(controlsView, 'speed:add', function() { this._changeSpeed(-100); });
+      this.listenTo(controlsView, 'speed:sub', function() { this._changeSpeed(100); });
 
       return controlsView;
     },
@@ -38,13 +42,19 @@ function($, Backbone, Field, AppRegion, MainLayout, ControlsView, FieldView) {
     _start: function() {
       this.intervalId = setInterval(function() {
         this.field.runStep();
-      }.bind(this), 100);
+      }.bind(this), this.controls.get('speed'));
       console.log('started');
     },
 
     _stop: function() {
       console.log('stopped');
       clearInterval(this.intervalId);
+    },
+
+    _changeSpeed: function(delta) {
+      this._stop();
+      this.controls.changeSpeed(delta);
+      this._start();
     }
 	});
 });

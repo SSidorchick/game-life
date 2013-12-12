@@ -13,8 +13,15 @@ function( Backbone, ControlsTmpl ) {
 		events: {
       'click #start': 'startClickHandler',
       'click #stop': 'stopClickHandler',
-      'click #add-speed': 'addSpeedHandler',
-      'click #sub-speed': 'subSpeedHander'
+      'click #add-speed': 'addSpeedClickHandler',
+      'click #sub-speed': 'subSpeedClickHandler'
+    },
+    modelEvents: {
+      'change': 'render'
+    },
+
+    onRender: function() {
+      this.ui.speed.val(this.model.get('speed'));
     },
     
     startClickHandler: function(e) {
@@ -29,16 +36,16 @@ function( Backbone, ControlsTmpl ) {
       this._processStopClick();
     },
 
-    addClickHandler: function(e) {
+    addSpeedClickHandler: function(e) {
       e.preventDefault();
 
-      this._processStartClick();
+      this._processAddSpeed();
     },
 
-    subClickHandler: function(e) {
+    subSpeedClickHandler: function(e) {
       e.preventDefault();
 
-      this._processStopClick();
+      this._processSubSpeed();
     },
 
     _processStartClick: function() {
