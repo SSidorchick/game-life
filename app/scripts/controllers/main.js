@@ -16,27 +16,28 @@ function($, Backbone, Controls, Field, AppRegion, MainLayout, ControlsView, Fiel
       var mainLayot = new MainLayout();
       AppRegion.show(mainLayot);
 
+      mainLayot.controls.show(this._createControls());
+      mainLayot.field.show(this._createField());
+    },
+
+    _createControls: function() {
       this.controls = new Controls();
-      mainLayot.controls.show(this._createControlsView(this.controls));
-      mainLayot.field.show(this._createFieldView());
+      var view = new ControlsView({ model: this.controls });
+      this.listenTo(view, 'controls:start', this._start);
+      this.listenTo(view, 'controls:stop', this._stop);
+      this.listenTo(view, 'speed:add', function() { this.controls.changeSpeed(-100); });
+      this.listenTo(view, 'speed:sub', function() { this.controls.changeSpeed(100); });
+      this.listenTo(view, 'speed:changed', function(speed) { this.controls.setSpeed(speed); });
+
+      return view;
     },
 
-    _createControlsView: function(model) {
-      var controlsView = new ControlsView({ model: model });
-      this.listenTo(controlsView, 'controls:start', this._start);
-      this.listenTo(controlsView, 'controls:stop', this._stop);
-      this.listenTo(controlsView, 'speed:add', function() { this._changeSpeed(-100); });
-      this.listenTo(controlsView, 'speed:sub', function() { this._changeSpeed(100); });
-
-      return controlsView;
-    },
-
-    _createFieldView: function() {
+    _createField: function() {
       // Pass null model collection, because Field calss generate models by itself.
       this.field = new Field(null, { height: 30, width: 30 });
-      var fieldView = new FieldView({ collection: this.field });
+      var view = new FieldView({ collection: this.field });
 
-      return fieldView;
+      return view;
     },
 
     _start: function() {
@@ -53,10 +54,6 @@ function($, Backbone, Controls, Field, AppRegion, MainLayout, ControlsView, Fiel
         this.field.runStep();
         setTimeout(this._processField.bind(this), this.controls.get('speed'));
       }
-    },
-
-    _changeSpeed: function(delta) {
-      this.controls.changeSpeed(delta);
     }
 	});
 });

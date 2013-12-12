@@ -14,7 +14,8 @@ function( Backbone, ControlsTmpl ) {
       'click #start': 'startClickHandler',
       'click #stop': 'stopClickHandler',
       'click #add-speed': 'addSpeedClickHandler',
-      'click #sub-speed': 'subSpeedClickHandler'
+      'click #sub-speed': 'subSpeedClickHandler',
+      'change #speed': 'speedChangedHandler'
     },
     modelEvents: {
       'change': 'render'
@@ -48,6 +49,12 @@ function( Backbone, ControlsTmpl ) {
       this._processSubSpeed();
     },
 
+    speedChangedHandler: function(e) {
+      e.preventDefault();
+
+      this._processSpeedChanged();
+    },
+
     _processStartClick: function() {
       this.trigger('controls:start');
     },
@@ -62,6 +69,10 @@ function( Backbone, ControlsTmpl ) {
 
     _processSubSpeed: function() {
       this.trigger('speed:sub');
+    },
+
+    _processSpeedChanged: function() {
+      this.trigger('speed:changed', this.ui.speed.val());
     }
 	});
 });

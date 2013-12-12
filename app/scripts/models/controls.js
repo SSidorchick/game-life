@@ -10,11 +10,21 @@ function( Backbone ) {
       speed: 500
     },
 
-    changeSpeed: function(delta) {
-      var result = this.get('speed') + delta;
-      if (result >= 100 && result <= 1000) {
-        this.set('speed', result);
+    setSpeed: function(speed) {
+      if (this._canSetSpeed(speed)) {
+        this.set('speed', speed);
+      } else {
+        // Trigger change event to rewrite invalide ui value.
+        this.trigger('change');
       }
+    },
+
+    changeSpeed: function(delta) {
+      this.setSpeed(this.get('speed') + delta);
+    },
+
+    _canSetSpeed: function(speed) {
+      return speed >= 100 && speed <= 1000;
     }
   });
 });
