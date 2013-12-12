@@ -10,7 +10,10 @@ function( Backbone ) {
     },
 
     changeSpeed: function(delta) {
-      this.set('speed', this.get('speed') + delta);
+      var result = this.get('speed') + delta;
+      if (result >= 100 && result <= 1000) {
+        this.set('speed', result);
+      }
     }
   });
 });
