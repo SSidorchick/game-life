@@ -38,7 +38,7 @@ function($, Backbone, Field, AppRegion, MainLayout, ControlsView, FieldView) {
     _start: function() {
       this.intervalId = setInterval(function() {
         this.field.runStep();
-      }.bind(this), 1000);
+      }.bind(this), 100);
       console.log('started');
     },
 
