@@ -10,6 +10,12 @@ function( Backbone ) {
       speed: 500
     },
 
+    initialize: function() {
+      this.speedDelta = 100;
+      this.minSpeed = 1000;
+      this.maxSpeed = 100;
+    },
+
     setSpeed: function(speed) {
       if (this._canSetSpeed(speed)) {
         this.set('speed', speed);
@@ -19,12 +25,16 @@ function( Backbone ) {
       }
     },
 
-    changeSpeed: function(delta) {
-      this.setSpeed(this.get('speed') + delta);
+    addSpeed: function() {
+      this.setSpeed(this.get('speed') - this.speedDelta);
+    },
+
+    subSpeed: function() {
+      this.setSpeed(this.get('speed') + this.speedDelta);
     },
 
     _canSetSpeed: function(speed) {
-      return speed >= 100 && speed <= 1000;
+      return speed >= this.maxSpeed && speed <= this.minSpeed;
     }
   });
 });

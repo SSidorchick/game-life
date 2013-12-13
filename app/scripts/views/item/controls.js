@@ -40,19 +40,19 @@ function( Backbone, ControlsTmpl ) {
     addSpeedClickHandler: function(e) {
       e.preventDefault();
 
-      this._processAddSpeed();
+      this.model.addSpeed();
     },
 
     subSpeedClickHandler: function(e) {
       e.preventDefault();
 
-      this._processSubSpeed();
+      this.model.subSpeed();
     },
 
     speedChangedHandler: function(e) {
       e.preventDefault();
 
-      this._processSpeedChanged();
+      this.model.setSpeed(this.ui.speed.val());
     },
 
     _processStartClick: function() {
@@ -61,18 +61,6 @@ function( Backbone, ControlsTmpl ) {
 
     _processStopClick: function() {
       this.trigger('controls:stop');
-    },
-
-    _processAddSpeed: function() {
-      this.trigger('speed:add');
-    },
-
-    _processSubSpeed: function() {
-      this.trigger('speed:sub');
-    },
-
-    _processSpeedChanged: function() {
-      this.trigger('speed:changed', this.ui.speed.val());
     }
 	});
 });

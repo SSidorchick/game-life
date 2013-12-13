@@ -25,9 +25,6 @@ function($, Backbone, Controls, Field, AppRegion, MainLayout, ControlsView, Fiel
       var view = new ControlsView({ model: this.controls });
       this.listenTo(view, 'controls:start', this._start);
       this.listenTo(view, 'controls:stop', this._stop);
-      this.listenTo(view, 'speed:add', function() { this.controls.changeSpeed(-100); });
-      this.listenTo(view, 'speed:sub', function() { this.controls.changeSpeed(100); });
-      this.listenTo(view, 'speed:changed', function(speed) { this.controls.setSpeed(speed); });
 
       return view;
     },
