@@ -28,13 +28,13 @@ function( Backbone, ControlsTmpl ) {
     startClickHandler: function(e) {
       e.preventDefault();
 
-      this._processStartClick();
+      this.model.set('running', true);
     },
 
     stopClickHandler: function(e) {
       e.preventDefault();
 
-      this._processStopClick();
+      this.model.set('running', false);
     },
 
     addSpeedClickHandler: function(e) {
@@ -53,14 +53,6 @@ function( Backbone, ControlsTmpl ) {
       e.preventDefault();
 
       this.model.setSpeed(this.ui.speed.val());
-    },
-
-    _processStartClick: function() {
-      this.trigger('controls:start');
-    },
-
-    _processStopClick: function() {
-      this.trigger('controls:stop');
     }
 	});
 });

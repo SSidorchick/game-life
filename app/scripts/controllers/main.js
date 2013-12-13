@@ -22,9 +22,9 @@ function($, Backbone, Controls, Field, AppRegion, MainLayout, ControlsView, Fiel
 
     _createControls: function() {
       this.controls = new Controls();
+      this.listenTo(this.controls, 'change:running', this._processField.bind(this));
+
       var view = new ControlsView({ model: this.controls });
-      this.listenTo(view, 'controls:start', this._start);
-      this.listenTo(view, 'controls:stop', this._stop);
 
       return view;
     },
@@ -35,15 +35,6 @@ function($, Backbone, Controls, Field, AppRegion, MainLayout, ControlsView, Fiel
       var view = new FieldView({ collection: this.field });
 
       return view;
-    },
-
-    _start: function() {
-      this.controls.set('running', true);
-      this._processField();
-    },
-
-    _stop: function() {
-      this.controls.set('running', false);
     },
 
     _processField: function() {
