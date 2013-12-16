@@ -8,14 +8,18 @@ function( Backbone, ControlsTmpl ) {
 	return Backbone.Marionette.ItemView.extend({
     template: ControlsTmpl,
     ui: {
-      speed: '#speed'
+      speed: '#speed',
+      dimension: '#dimension'
     },
 		events: {
       'click #start': 'startClickHandler',
       'click #stop': 'stopClickHandler',
       'click #add-speed': 'addSpeedClickHandler',
       'click #sub-speed': 'subSpeedClickHandler',
-      'change #speed': 'speedChangedHandler'
+      'change #speed': 'speedChangedHandler',
+      'click #add-dimension': 'addDimensionClickHandler',
+      'click #sub-dimension': 'subDimensionClickHandler',
+      'change #dimension': 'dimensionChangedHandler'
     },
     modelEvents: {
       'change': 'render'
@@ -23,6 +27,7 @@ function( Backbone, ControlsTmpl ) {
 
     onRender: function() {
       this.ui.speed.val(this.model.get('speed'));
+      this.ui.dimension.val(this.model.get('dimension'));
     },
     
     startClickHandler: function(e) {
@@ -53,6 +58,24 @@ function( Backbone, ControlsTmpl ) {
       e.preventDefault();
 
       this.model.setSpeed(this.ui.speed.val());
+    },
+
+    addDimensionClickHandler: function(e) {
+      e.preventDefault();
+
+      this.model.addDimension();
+    },
+
+    subDimensionClickHandler: function(e) {
+      e.preventDefault();
+
+      this.model.subDimension();
+    },
+
+    dimensionChangedHandler: function(e) {
+      e.preventDefault();
+
+      this.model.setDimension(this.ui.dimension.val());
     }
 	});
 });

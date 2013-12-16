@@ -13,28 +13,29 @@ function($, Backbone, Controls, Field, AppRegion, MainLayout, ControlsView, Fiel
 
 	return Backbone.Marionette.Controller.extend({
     index: function() {
-      var mainLayot = new MainLayout();
-      AppRegion.show(mainLayot);
+      this.mainLayot = new MainLayout();
+      AppRegion.show(this.mainLayot);
 
-      mainLayot.controls.show(this._createControls());
-      mainLayot.field.show(this._createField());
+      this._createControls();
+      this._createField();
     },
 
     _createControls: function() {
       this.controls = new Controls();
       this.listenTo(this.controls, 'change:running', this._processField.bind(this));
+      this.listenTo(this.controls, 'change:dimension', this._createField.bind(this));
 
       var view = new ControlsView({ model: this.controls });
-
-      return view;
+      this.mainLayot.controls.show(view);
     },
 
     _createField: function() {
       // Pass null model collection, because Field calss generate models by itself.
-      this.field = new Field(null, { height: 30, width: 30 });
-      var view = new FieldView({ collection: this.field });
+      var dimension = this.controls.get('dimension');
+      this.field = new Field(null, { height: dimension, width: dimension });
 
-      return view;
+      var view = new FieldView({ collection: this.field });
+      this.mainLayot.field.show(view);
     },
 
     _processField: function() {
