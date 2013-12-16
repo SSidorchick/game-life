@@ -11,6 +11,11 @@ function( Backbone, Cell ) {
       'click': 'clicked'
     },
 
+    onRender: function() {
+      this.$el.height(this.collection.height * 10);
+      this.$el.width(this.collection.width * 10);
+    },
+
     onShow: function() {
       this.offset = {
         left: this.$el.offset().left,
@@ -38,7 +43,7 @@ function( Backbone, Cell ) {
       x = Math.min(Math.max(0, x), this.dimensions.width);
       y = Math.min(Math.max(0, y), this.dimensions.height - 1);
 
-      var child = this.children.findByIndex(Math.floor(y / 10) * 30 + Math.floor(x / 10));
+      var child = this.children.findByIndex(Math.floor(y / 10) * this.collection.width + Math.floor(x / 10));
       child.model.toggleAlive();
     }
 	});

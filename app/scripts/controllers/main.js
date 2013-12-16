@@ -23,7 +23,10 @@ function($, Backbone, Controls, Field, AppRegion, MainLayout, ControlsView, Fiel
     _createControls: function() {
       this.controls = new Controls();
       this.listenTo(this.controls, 'change:running', this._processField.bind(this));
-      this.listenTo(this.controls, 'change:dimension', this._createField.bind(this));
+      this.listenTo(this.controls, 'change:dimension', function() {
+        this.controls.set('running', false);
+        this._createField();
+      });
 
       var view = new ControlsView({ model: this.controls });
       this.mainLayot.controls.show(view);
