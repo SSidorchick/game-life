@@ -8,12 +8,12 @@ function( Backbone, ControlsTmpl ) {
 	return Backbone.Marionette.ItemView.extend({
     template: ControlsTmpl,
     ui: {
+      run: '#run',
       speed: '#speed',
       dimension: '#dimension'
     },
 		events: {
-      'click #start': 'startClickHandler',
-      'click #stop': 'stopClickHandler',
+      'click #run': 'runClickHandler',
       'click #add-speed': 'addSpeedClickHandler',
       'click #sub-speed': 'subSpeedClickHandler',
       'change #speed': 'speedChangedHandler',
@@ -26,20 +26,23 @@ function( Backbone, ControlsTmpl ) {
     },
 
     onRender: function() {
+      if (this.model.get('running')) {
+        this.ui.run.text('Stop');
+      } else {
+        this.ui.run.text('Start');
+      }
       this.ui.speed.val(this.model.get('speed'));
       this.ui.dimension.val(this.model.get('dimension'));
     },
     
-    startClickHandler: function(e) {
+    runClickHandler: function(e) {
       e.preventDefault();
 
-      this.model.set('running', true);
-    },
-
-    stopClickHandler: function(e) {
-      e.preventDefault();
-
-      this.model.set('running', false);
+      if (this.model.get('running')) {
+        this.model.set('running', false);
+      } else {
+        this.model.set('running', true);
+      }
     },
 
     addSpeedClickHandler: function(e) {
