@@ -29,13 +29,15 @@
 
   > div {
     margin: 0 auto;
-    border: 1px solid #000;
+    border: 1px solid gray;
+    padding: 1px 0 0 1px;
 
     .cell {
       display: inline-block;
-      height: 10px;
-      width: 10px;
-      border: 1px solid #000;
+      margin: -1px 0 0 -1px;
+      height: 11px;
+      width: 11px;
+      border: 1px solid gray;
       box-sizing: border-box;
     }
 
