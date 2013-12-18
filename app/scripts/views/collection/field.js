@@ -40,7 +40,7 @@ function( Backbone, Cell ) {
       var y = clientY - this.offset.top;
 
       // Round values because can be less than 0 and greater than Field view dimensions.
-      x = Math.min(Math.max(0, x), this.dimensions.width);
+      x = Math.min(Math.max(0, x), this.dimensions.width - 1);
       y = Math.min(Math.max(0, y), this.dimensions.height - 1);
 
       var child = this.children.findByIndex(Math.floor(y / 10) * this.collection.width + Math.floor(x / 10));
