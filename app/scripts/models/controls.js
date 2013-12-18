@@ -8,7 +8,7 @@ function( Backbone ) {
 		defaults: {
       running: false,
       speed: 500,
-      dimension: 30
+      dimension: 50
     },
 
     initialize: function() {
