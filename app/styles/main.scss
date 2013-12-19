@@ -1,5 +1,9 @@
 @import 'sass-bootstrap/lib/bootstrap';
 
+.form-control {
+  display: inline-block;
+}
+
 .container {
   width: auto;
 }
@@ -35,11 +39,13 @@
   line-height: 10px;
   font-size: 14px;
   text-align: center;
+  box-sizing: content-box;
 
   > div {
     margin: 0 auto;
     border: 1px solid gray;
     padding: 1px 0 0 1px;
+    box-sizing: content-box;
 
     .cell {
       display: inline-block;
