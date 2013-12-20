@@ -27,9 +27,7 @@ function( Backbone, ControlsTmpl ) {
 
     onRender: function() {
       if (this.model.get('running')) {
-        this.ui.run.text('Stop');
-      } else {
-        this.ui.run.text('Start');
+        this.ui.run.toggleClass('fa-play fa-pause');
       }
       this.ui.speed.val(this.model.get('speed'));
       this.ui.dimension.val(this.model.get('dimension'));
