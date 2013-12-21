@@ -25,11 +25,19 @@ function( Backbone, ControlsTmpl ) {
       'change': 'render'
     },
 
+    initialize: function(options) {
+      this.defaultSpeed = options.model.get('speed');
+    },
+
     onRender: function() {
       if (this.model.get('running')) {
         this.ui.run.toggleClass('fa-play fa-pause');
       }
-      this.ui.speed.val(this.model.get('speed'));
+
+      var speed = this.model.get('speed');
+      var speedText = (this.defaultSpeed / speed).toFixed(2) + 'X';
+      this.ui.speed.text(speedText);
+
       this.ui.dimension.val(this.model.get('dimension'));
     },
     
