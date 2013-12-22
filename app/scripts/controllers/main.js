@@ -44,7 +44,7 @@ function($, Backbone, Controls, Field, AppRegion, MainLayout, ControlsView, Fiel
     _processField: function() {
       if (this.controls.get('running')) {
         this.field.runStep();
-        setTimeout(this._processField.bind(this), this.controls.get('speed'));
+        setTimeout(this._processField.bind(this), this.controls.get('delay'));
       }
     }
 	});

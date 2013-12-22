@@ -14,9 +14,8 @@ function( Backbone, ControlsTmpl ) {
     },
 		events: {
       'click #run': 'runClickHandler',
-      'click #add-speed': 'addSpeedClickHandler',
-      'click #sub-speed': 'subSpeedClickHandler',
-      'change #speed': 'speedChangedHandler',
+      'click #increase-speed': 'increaseSpeedClickHandler',
+      'click #decrease-speed': 'decreaseSpeedClickHandler',
       'click #add-dimension': 'addDimensionClickHandler',
       'click #sub-dimension': 'subDimensionClickHandler',
       'change #dimension': 'dimensionChangedHandler'
@@ -34,8 +33,7 @@ function( Backbone, ControlsTmpl ) {
         this.ui.run.toggleClass('fa-play fa-pause');
       }
 
-      var speed = this.model.get('speed');
-      var speedText = (this.defaultSpeed / speed).toFixed(2) + 'X';
+      var speedText = this._getSpeedText(this.model.get('defaultDelay'), this.model.get('delay'));
       this.ui.speed.text(speedText);
 
       this.ui.dimension.val(this.model.get('dimension'));
@@ -51,22 +49,16 @@ function( Backbone, ControlsTmpl ) {
       }
     },
 
-    addSpeedClickHandler: function(e) {
+    increaseSpeedClickHandler: function(e) {
       e.preventDefault();
 
-      this.model.addSpeed();
+      this.model.increaseSpeed();
     },
 
-    subSpeedClickHandler: function(e) {
+    decreaseSpeedClickHandler: function(e) {
       e.preventDefault();
 
-      this.model.subSpeed();
-    },
-
-    speedChangedHandler: function(e) {
-      e.preventDefault();
-
-      this.model.setSpeed(this.ui.speed.val());
+      this.model.decreaseSpeed();
     },
 
     addDimensionClickHandler: function(e) {
@@ -85,6 +77,11 @@ function( Backbone, ControlsTmpl ) {
       e.preventDefault();
 
       this.model.setDimension(this.ui.dimension.val());
+    },
+
+    _getSpeedText: function(defaultDelay, delay) {
+      var fraction = defaultDelay / delay;
+      return fraction.toFixed(2) + 'X';
     }
 	});
 });

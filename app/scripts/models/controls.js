@@ -7,39 +7,36 @@ function( Backbone ) {
 	return Backbone.Model.extend({
 		defaults: {
       running: false,
-      speed: 500,
+      delay: 400,
       dimension: 50
     },
 
     initialize: function() {
-      this.speedDelta = 100;
-      this.minSpeed = 1000;
-      this.maxSpeed = 100;
+      this.maxDelay = 3200;
+      this.minDelay = 50;
+      this.set('defaultDelay', this.get('delay'));
 
       this.dimensionDelta = 10;
       this.minDimension = 10;
       this.maxDimension = 100;
     },
 
-    setSpeed: function(speed) {
-      if (this._canSetSpeed(speed)) {
-        this.set('speed', speed);
-      } else {
-        // Trigger change event to rewrite invalide ui value.
-        this.trigger('change');
+    setDelay: function(delay) {
+      if (this._canSetDelay(delay)) {
+        this.set('delay', delay);
       }
     },
 
-    addSpeed: function() {
-      this.setSpeed(this.get('speed') - this.speedDelta);
+    increaseSpeed: function() {
+      this.setDelay(this.get('delay') / 2);
     },
 
-    subSpeed: function() {
-      this.setSpeed(this.get('speed') + this.speedDelta);
+    decreaseSpeed: function() {
+      this.setDelay(this.get('delay') * 2);
     },
 
-    _canSetSpeed: function(speed) {
-      return speed >= this.maxSpeed && speed <= this.minSpeed;
+    _canSetDelay: function(delay) {
+      return delay >= this.minDelay && delay <= this.maxDelay;
     },
 
     setDimension: function(dimension) {
