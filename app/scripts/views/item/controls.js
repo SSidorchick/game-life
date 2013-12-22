@@ -15,10 +15,7 @@ function( Backbone, ControlsTmpl ) {
 		events: {
       'click #run': 'runClickHandler',
       'click #increase-speed': 'increaseSpeedClickHandler',
-      'click #decrease-speed': 'decreaseSpeedClickHandler',
-      'click #add-dimension': 'addDimensionClickHandler',
-      'click #sub-dimension': 'subDimensionClickHandler',
-      'change #dimension': 'dimensionChangedHandler'
+      'click #decrease-speed': 'decreaseSpeedClickHandler'
     },
     modelEvents: {
       'change': 'render'
@@ -59,24 +56,6 @@ function( Backbone, ControlsTmpl ) {
       e.preventDefault();
 
       this.model.decreaseSpeed();
-    },
-
-    addDimensionClickHandler: function(e) {
-      e.preventDefault();
-
-      this.model.addDimension();
-    },
-
-    subDimensionClickHandler: function(e) {
-      e.preventDefault();
-
-      this.model.subDimension();
-    },
-
-    dimensionChangedHandler: function(e) {
-      e.preventDefault();
-
-      this.model.setDimension(this.ui.dimension.val());
     },
 
     _getSpeedText: function(defaultDelay, delay) {
