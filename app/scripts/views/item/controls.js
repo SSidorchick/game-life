@@ -59,8 +59,11 @@ function( Backbone, ControlsTmpl ) {
     },
 
     _getSpeedText: function(defaultDelay, delay) {
-      var fraction = defaultDelay / delay;
-      return fraction.toFixed(2) + 'X';
+      if (defaultDelay >= delay) {
+        return defaultDelay / delay + 'X';
+      } else {
+        return '1/' + delay / defaultDelay + 'X';
+      }
     }
 	});
 });
