@@ -9,17 +9,25 @@
   margin: 50px 0 20px;
   text-align: center;
 
+  @media (max-width: 532px), (max-height: 600px) {
+    margin: 10px 0 10px;
+  }
+
   h1 {
     margin: 0;
+
+    span {
+      @media (max-width: 532px) {
+        display: none;
+      }
+    }
   }
 }
 
 #controls {
   text-align: center;
 
-  > div {
     margin: 20px auto;
-  }
 
   button, label {
     padding: 2px 10px; 
@@ -63,4 +71,3 @@
     }
   }
 }
-
