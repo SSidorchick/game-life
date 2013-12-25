@@ -18,6 +18,8 @@ function($, Backbone, Controls, Field, AppRegion, MainLayout, ControlsView, Fiel
 
       this._createControls();
       this._createField();
+
+      $(window).on('resize orientationchange', this._createField.bind(this));
     },
 
     _createControls: function() {
@@ -29,14 +31,15 @@ function($, Backbone, Controls, Field, AppRegion, MainLayout, ControlsView, Fiel
     },
 
     _createField: function() {
-      // Maximum field area width = document width - container padding - field (border + padding-left).
-      var areaWidth = $(document).width() - 30 - 3;
-      var width = this._getResponsiveFieldDimension(areaWidth);
-      // Maximum field area height = document height - title height - controls height - field (border + padding-left).
-      var areaHeight = $(document).height() - 59 - 77 - 3;
-      var height = this._getResponsiveFieldDimension(areaHeight);
+      var dimensions = this._getFieldDimensions();
+      if (this.field &&
+          this.field.height === dimensions.height &&
+          this.field.width === dimensions.width) {
+        return;
+      }
+
       // Pass null model collection, because Field calss generates models by itself.
-      this.field = new Field(null, { height: height, width: width });
+      this.field = new Field(null, dimensions);
 
       var view = new FieldView({ collection: this.field });
       this.mainLayot.field.show(view);
@@ -47,6 +50,17 @@ function($, Backbone, Controls, Field, AppRegion, MainLayout, ControlsView, Fiel
         this.field.runStep();
         setTimeout(this._processField.bind(this), this.controls.get('delay'));
       }
+    },
+
+    _getFieldDimensions: function() {
+      // Maximum field area height = document height - title height - controls height - field (border + padding-top).
+      var areaHeight = $(document).height() - 59 - 77 - 3;
+      var height = this._getResponsiveFieldDimension(areaHeight);
+      // Maximum field area width = document width - container padding - field (border + padding-left).
+      var areaWidth = $(document).width() - 30 - 3;
+      var width = this._getResponsiveFieldDimension(areaWidth);
+
+      return { height: height, width: width };
     },
 
     _getResponsiveFieldDimension: function(clientDimension) {
