@@ -33,11 +33,15 @@ function( $, Backbone, ControlsTmpl ) {
         this.ui.run.toggleClass('fa-play fa-pause');
       }
 
-      var speedText = this._getSpeedText(this.model.get('defaultDelay'), this.model.get('delay'));
+      var speedText = this._renderSpeedText(this.model.get('defaultDelay'), this.model.get('delay'));
       this.ui.speed.text(speedText);
 
       var patterns = this._renderPatterns(this.model.get('patterns'));
       this.ui.patterns.append(patterns);
+      var currentPattern = this.model.get('currentPattern');
+      if (currentPattern) {
+        this.ui.patterns.val(currentPattern.key);
+      }
     },
     
     runClickHandler: function(e) {
@@ -69,7 +73,7 @@ function( $, Backbone, ControlsTmpl ) {
       this.model.changePattern(patternKey);
     },
 
-    _getSpeedText: function(defaultDelay, delay) {
+    _renderSpeedText: function(defaultDelay, delay) {
       if (defaultDelay >= delay) {
         return defaultDelay / delay + 'X';
       } else {
