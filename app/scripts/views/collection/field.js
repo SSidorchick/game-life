@@ -24,7 +24,7 @@ function( Backbone, Cell ) {
     _clickCell: function(clientX, clientY) {
       // With 'click' event binding in Cell views event sometimes not fired.
       // With event delegation when event handled in Field view target sometimes is Field view itself instead of Cell view.
-      // So, workaround is introduce to calculate the Cell view position from cursor position.
+      // So, workaround is introduced to calculate the Cell view position from cursor position.
       var x = clientX - this.$el.offset().left;
       var y = clientY - this.$el.offset().top;
 

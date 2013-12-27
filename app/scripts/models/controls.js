@@ -1,14 +1,25 @@
 define([
+  'underscore',
 	'backbone'
 ],
-function( Backbone ) {
+function( _, Backbone ) {
   'use strict';
 
 	return Backbone.Model.extend({
 		defaults: {
       running: false,
       delay: 400,
-      dimension: 50
+      dimension: 50,
+      patterns: [
+        {
+          key: 'Empty',
+          value: []
+        },
+        {
+          key: 'R-Pentomino',
+          value: [[0, 0], [0, 1], [1, -1], [1, 0], [2, 0]]
+        }
+      ]
     },
 
     initialize: function() {
@@ -29,6 +40,13 @@ function( Backbone ) {
 
     decreaseSpeed: function() {
       this.setDelay(this.get('delay') * 2);
+    },
+
+    changePattern: function(patternKey) {
+      var pattern = _.find(this.get('patterns'), function(p) {
+        return p.key === patternKey;
+      });
+      this.set('currentPattern', pattern);
     },
 
     _canSetDelay: function(delay) {

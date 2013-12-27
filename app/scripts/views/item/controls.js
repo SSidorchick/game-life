@@ -1,8 +1,9 @@
 define([
+  'jquery',
 	'backbone',
 	'hbs!tmpl/item/controls'
 ],
-function( Backbone, ControlsTmpl ) {
+function( $, Backbone, ControlsTmpl ) {
   'use strict';
 
 	return Backbone.Marionette.ItemView.extend({
@@ -10,12 +11,14 @@ function( Backbone, ControlsTmpl ) {
     ui: {
       run: '#run',
       speed: '#speed',
-      dimension: '#dimension'
+      patterns: '#patterns'
+
     },
-		events: {
+    events: {
       'click #run': 'runClickHandler',
       'click #increase-speed': 'increaseSpeedClickHandler',
-      'click #decrease-speed': 'decreaseSpeedClickHandler'
+      'click #decrease-speed': 'decreaseSpeedClickHandler',
+      'change #patterns': 'patternChangeHandler'
     },
     modelEvents: {
       'change': 'render'
@@ -33,7 +36,8 @@ function( Backbone, ControlsTmpl ) {
       var speedText = this._getSpeedText(this.model.get('defaultDelay'), this.model.get('delay'));
       this.ui.speed.text(speedText);
 
-      this.ui.dimension.val(this.model.get('dimension'));
+      var patterns = this._renderPatterns(this.model.get('patterns'));
+      this.ui.patterns.append(patterns);
     },
     
     runClickHandler: function(e) {
@@ -58,12 +62,27 @@ function( Backbone, ControlsTmpl ) {
       this.model.decreaseSpeed();
     },
 
+    patternChangeHandler: function(e) {
+      e.preventDefault();
+
+      var patternKey = this.ui.patterns.children(':selected').text();
+      this.model.changePattern(patternKey);
+    },
+
     _getSpeedText: function(defaultDelay, delay) {
       if (defaultDelay >= delay) {
         return defaultDelay / delay + 'X';
       } else {
         return '1/' + delay / defaultDelay + 'X';
       }
+    },
+
+    _renderPatterns: function(patterns) {
+      var fragment = document.createDocumentFragment();
+      for (var i = 0; i < patterns.length; i++) {
+        $('<option>').text(patterns[i].key).appendTo(fragment);
+      }
+      return fragment;
     }
 	});
 });
