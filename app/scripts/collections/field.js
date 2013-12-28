@@ -40,6 +40,25 @@ function( Backbone, _, Cell ) {
       }
     },
 
+    changePattern: function(pattern) {
+      this._resetField();
+
+      var centerX = Math.ceil(this.width / 2);
+      var centerY = Math.ceil(this.height / 2);
+      for (var i = 0; i < pattern.value.length; i++) {
+        var point = pattern.value[i];
+        var cell = this.at((centerX + point[0]) * this.width + centerY + point[1]);
+        cell.toggleAlive();
+      }
+    },
+
+    _resetField: function() {
+      for (var i = 0; i < this.length; i++) {
+        var cell = this.at(i);
+        cell.set('isAlive', false);
+      }
+    },
+
     _getNeighbours: function(i, j) {
       var neighbours = [];
 

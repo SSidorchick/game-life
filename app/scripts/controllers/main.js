@@ -25,6 +25,7 @@ function($, Backbone, Controls, Field, AppRegion, MainLayout, ControlsView, Fiel
     _createControls: function() {
       this.controls = new Controls();
       this.listenTo(this.controls, 'change:running', this._processField.bind(this));
+      this.listenTo(this.controls, 'change:pattern', this._changeFieldPattern.bind(this));
 
       var view = new ControlsView({ model: this.controls });
       this.mainLayot.controls.show(view);
@@ -50,6 +51,12 @@ function($, Backbone, Controls, Field, AppRegion, MainLayout, ControlsView, Fiel
         this.field.runStep();
         setTimeout(this._processField.bind(this), this.controls.get('delay'));
       }
+    },
+
+    _changeFieldPattern: function() {
+      var pattern = this.controls.get('pattern');
+      this.controls.set('running', false);
+      this.field.changePattern(pattern);
     },
 
     _getFieldDimensions: function() {
