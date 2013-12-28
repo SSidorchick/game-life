@@ -36,11 +36,11 @@ function( $, Backbone, ControlsTmpl ) {
       var speedText = this._renderSpeedText(this.model.get('defaultDelay'), this.model.get('delay'));
       this.ui.speed.text(speedText);
 
-      var patterns = this._renderPatterns(this.model.get('patterns'));
+      var patterns = this._renderPatterns(this.model.get('availablePatterns'));
       this.ui.patterns.append(patterns);
-      var currentPattern = this.model.get('currentPattern');
-      if (currentPattern) {
-        this.ui.patterns.val(currentPattern.key);
+      var pattern = this.model.get('pattern');
+      if (pattern) {
+        this.ui.patterns.val(pattern.key);
       }
     },
     

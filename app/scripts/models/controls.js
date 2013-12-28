@@ -10,7 +10,7 @@ function( _, Backbone ) {
       running: false,
       delay: 400,
       dimension: 50,
-      patterns: [
+      availablePatterns: [
         {
           key: 'Empty',
           value: []
@@ -43,10 +43,10 @@ function( _, Backbone ) {
     },
 
     changePattern: function(patternKey) {
-      var pattern = _.find(this.get('patterns'), function(p) {
+      var pattern = _.find(this.get('availablePatterns'), function(p) {
         return p.key === patternKey;
       });
-      this.set('currentPattern', pattern);
+      this.set('pattern', pattern);
     },
 
     _canSetDelay: function(delay) {
