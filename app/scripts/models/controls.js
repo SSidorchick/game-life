@@ -13,11 +13,18 @@ function( _, Backbone ) {
       availablePatterns: [
         {
           key: 'Empty',
+          start: [0, 0],
           value: []
         },
         {
           key: 'R-Pentomino',
+          start: [0.5, 0.5],
           value: [[-1, 0], [-1, 1], [0, -1], [0, 0], [1, 0]]
+        },
+        {
+          key: 'Glider',
+          start: [0, 0],
+          value: [[0, 1], [1, 2], [2, 0], [2, 1], [2, 2]]
         }
       ]
     },
