@@ -16,7 +16,11 @@
   margin: 50px 0 20px;
   text-align: center;
 
-  @media (max-width: 532px), (max-height: 600px) {
+  @media (max-width: 532px) {
+    margin: 40px 0 20px;
+  }
+
+  @media (max-width: 422px), (max-height: 600px) {
     margin: 10px 0 10px;
   }
 
@@ -35,9 +39,23 @@
   text-align: center;
   margin: 20px auto;
 
-  button, label {
+  @media (max-width: 422px), (max-height: 600px) {
+    margin: 10px auto;
+  }
+
+  .control {
+    margin: 0 10px;
     padding: 2px 10px;
     font-size: 22px;
+  }
+
+  .control-group {
+    display: inline-block;
+    margin: 0 10px;
+
+    .control {
+      margin: 0;
+    }
   }
 
   #run {
@@ -54,15 +72,19 @@
     display: inline-block;
     width: 145px;
     font-size: 18px;
-    margin: 2px 0;
+    margin-top: 2px;
+
+    @media (max-width: 422px) {
+      margin: 10px 0 0;
+    }
   }
 }
 
 #field {
+  box-sizing: content-box;
   line-height: 10px;
   font-size: 14px;
   text-align: center;
-  box-sizing: content-box;
 
   > div {
     margin: 0 auto;

@@ -63,18 +63,22 @@ function($, Backbone, Controls, Field, AppRegion, MainLayout, ControlsView, Fiel
       // TODO: Replace jQuery usage.
       var elemntWidth = $('#field').width();
       // TODO: Replace jQuery usage.
-      var elemntHeight = $('#field').height();
+      // Subtracting addtional value to prevent vertical scroll appearance in come cases (e.g. iPad 2).
+      var elemntHeight = $('#field').height() - 3;
 
-      var width = this._getResponsiveFieldDimension(elemntWidth);
+      var width = this._getResponsiveFieldDimension(elemntWidth, this.controls.get('dimension'));
       var height = this._getResponsiveFieldDimension(elemntHeight);
 
       return { height: height, width: width };
     },
 
-    _getResponsiveFieldDimension: function(clientDimension) {
-      var maxDimension = this.controls.get('dimension');
-      var cellsDimension = Math.floor(clientDimension / 10);
-      return Math.min(cellsDimension, maxDimension);
+    _getResponsiveFieldDimension: function(clientDimension, limit) {
+      var cellDimension = Math.floor(clientDimension / 10);
+      if (limit) {
+        return Math.min(cellDimension, limit);
+      } else {
+        return cellDimension;
+      }
     }
 	});
 });
