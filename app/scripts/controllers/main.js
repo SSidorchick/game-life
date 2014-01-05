@@ -60,12 +60,13 @@ function($, Backbone, Controls, Field, AppRegion, MainLayout, ControlsView, Fiel
     },
 
     _getFieldDimensions: function() {
-      // Maximum field area height = document height - title height - controls height - field (border + padding-top).
-      var areaHeight = $(document).height() - 59 - 77 - 3;
-      var height = this._getResponsiveFieldDimension(areaHeight);
-      // Maximum field area width = document width - container padding - field (border + padding-left).
-      var areaWidth = $(document).width() - 30 - 3;
-      var width = this._getResponsiveFieldDimension(areaWidth);
+      // TODO: Replace jQuery usage.
+      var elemntWidth = $('#field').width();
+      // TODO: Replace jQuery usage.
+      var elemntHeight = $('#field').height();
+
+      var width = this._getResponsiveFieldDimension(elemntWidth);
+      var height = this._getResponsiveFieldDimension(elemntHeight);
 
       return { height: height, width: width };
     },
