@@ -26,6 +26,7 @@ function($, Backbone, Controls, Field, AppRegion, MainLayout, ControlsView, Fiel
       this.controls = new Controls();
       this.listenTo(this.controls, 'change:running', this._processField.bind(this));
       this.listenTo(this.controls, 'change:pattern', this._changeFieldPattern.bind(this));
+      this.listenTo(this.controls, 'action:step-forward', this._stepForward.bind(this));
 
       var view = new ControlsView({ model: this.controls });
       this.mainLayot.controls.show(view);
@@ -57,6 +58,11 @@ function($, Backbone, Controls, Field, AppRegion, MainLayout, ControlsView, Fiel
       var pattern = this.controls.get('pattern');
       this.controls.set('running', false);
       this.field.changePattern(pattern);
+    },
+
+    _stepForward: function() {
+      this.controls.set('running', false);
+      this.field.runStep();
     },
 
     _getFieldDimensions: function() {

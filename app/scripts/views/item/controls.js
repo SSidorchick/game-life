@@ -10,12 +10,14 @@ function( $, Backbone, ControlsTmpl ) {
     template: ControlsTmpl,
     ui: {
       run: '#run',
+      step: '#step-forward',
       speed: '#speed',
       patterns: '#patterns'
 
     },
     events: {
       'click #run': 'runClickHandler',
+      'click #step-forward': 'stepForwardClickHandler',
       'click #increase-speed': 'increaseSpeedClickHandler',
       'click #decrease-speed': 'decreaseSpeedClickHandler',
       'change #patterns': 'patternChangeHandler'
@@ -43,7 +45,7 @@ function( $, Backbone, ControlsTmpl ) {
         this.ui.patterns.val(pattern.key);
       }
     },
-    
+
     runClickHandler: function(e) {
       e.preventDefault();
 
@@ -52,6 +54,12 @@ function( $, Backbone, ControlsTmpl ) {
       } else {
         this.model.set('running', true);
       }
+    },
+
+    stepForwardClickHandler: function(e) {
+      e.preventDefault();
+
+      this.model.trigger('action:step-forward');
     },
 
     increaseSpeedClickHandler: function(e) {
