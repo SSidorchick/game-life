@@ -1,6 +1,16 @@
 @import 'sass-bootstrap/lib/bootstrap';
 @import '../bower_components/font-awesome/css/font-awesome.css';
 
+.github-fork-ribbon-wrapper {
+  @media (max-width: 700px) {
+    display: none;
+  }
+
+  .github-fork-ribbon {
+    background-color: #000;
+  }
+}
+
 // Configuration for a sticky footer.
 .container {
   display: flex;
