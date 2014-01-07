@@ -6,9 +6,10 @@ define([
   'regions/app',
   'views/layout/main',
   'views/item/controls',
+  'views/item/spinner',
   'views/collection/field'
 ],
-function($, Backbone, Controls, Field, AppRegion, MainLayout, ControlsView, FieldView) {
+function($, Backbone, Controls, Field, AppRegion, MainLayout, ControlsView, SpinnerView, FieldView) {
   'use strict';
 
 	return Backbone.Marionette.Controller.extend({
@@ -16,6 +17,7 @@ function($, Backbone, Controls, Field, AppRegion, MainLayout, ControlsView, Fiel
       this.mainLayot = new MainLayout();
       AppRegion.show(this.mainLayot);
 
+      this.spinnerView = new SpinnerView();
       this._createControls();
       // TODO: Remove circular dependency. _getFieldDimensions method should not depend on controls object.
       var dimensions = this._getFieldDimensions();
@@ -47,11 +49,20 @@ function($, Backbone, Controls, Field, AppRegion, MainLayout, ControlsView, Fiel
         return;
       }
 
-      // Pass null model collection, because Field calss generates models by itself.
-      this.field = new Field(null, dimensions);
+      if (!this.rendering) {
+        this.mainLayot.field.show(this.spinnerView);
+        this.rendering = true;
+      }
 
-      var view = new FieldView({ collection: this.field });
-      this.mainLayot.field.show(view);
+      setTimeout((function() {
+        // Pass null model collection, because Field calss generates models by itself.
+        this.field = new Field(null, dimensions);
+
+        var view = new FieldView({ collection: this.field });
+        this.mainLayot.field.show(view);
+
+        this.rendering = false;
+      }).bind(this), 50); // Settings timeout to let browser render spinner.
     },
 
     _processField: function() {

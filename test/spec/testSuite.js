@@ -12,6 +12,7 @@ define(function() {
 		'spec/views/collection/field.js',
 		'spec/views/item/cell.js',
 		'spec/views/item/controls.js',
+		'spec/views/item/spinner.js',
 		'spec/views/layout/main.js'
 		]
 	};
