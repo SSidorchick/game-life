@@ -43,11 +43,11 @@ function( Backbone, _, Cell ) {
     changePattern: function(pattern) {
       this._resetField();
 
-      var startX = Math.ceil(pattern.start[0] * this.width);
-      var startY = Math.ceil(pattern.start[1] * this.height);
+      var startX = Math.floor(pattern.start[1] * this.width);
+      var startY = Math.floor(pattern.start[0] * this.height);
       for (var i = 0; i < pattern.value.length; i++) {
         var point = pattern.value[i];
-        var cell = this.at((startX + point[0]) * this.width + startY + point[1]);
+        var cell = this.at((startY + point[0]) * this.width + startX + point[1]);
         cell.toggleAlive();
       }
     },

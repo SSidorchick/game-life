@@ -17,9 +17,17 @@ function($, Backbone, Controls, Field, AppRegion, MainLayout, ControlsView, Fiel
       AppRegion.show(this.mainLayot);
 
       this._createControls();
-      this._createField();
+      // TODO: Remove circular dependency. _getFieldDimensions method should not depend on controls object.
+      var dimensions = this._getFieldDimensions();
+      this.controls.setAvailablePatterns(dimensions);
+      this._createField(dimensions);
 
-      $(window).on('resize orientationchange', this._createField.bind(this));
+      $(window).on('resize orientationchange', (function() {
+        // TODO: Remove circular dependency. _getFieldDimensions method should not depend on controls object.
+        var dimensions = this._getFieldDimensions();
+        this.controls.setAvailablePatterns(dimensions);
+        this._createField(dimensions);
+      }).bind(this));
     },
 
     _createControls: function() {
@@ -32,8 +40,7 @@ function($, Backbone, Controls, Field, AppRegion, MainLayout, ControlsView, Fiel
       this.mainLayot.controls.show(view);
     },
 
-    _createField: function() {
-      var dimensions = this._getFieldDimensions();
+    _createField: function(dimensions) {
       if (this.field &&
           this.field.height === dimensions.height &&
           this.field.width === dimensions.width) {

@@ -10,7 +10,7 @@ function( _, Backbone ) {
       running: false,
       delay: 400,
       dimension: 50,
-      availablePatterns: [
+      allPatterns: [
         {
           key: 'Empty',
           start: [0, 0],
@@ -28,6 +28,7 @@ function( _, Backbone ) {
         },
         {
           key: 'Glider Gun',
+          requiredDimensions: { width: 37, height: 12 },
           start: [0.05, 0.05],
           value: [[4, 0], [4, 1], [5, 0], [5, 1],
                   [2, 12], [2, 13], [3, 11], [4, 10], [5, 10], [6, 10], [7, 11], [8, 12], [8, 13],
@@ -44,6 +45,7 @@ function( _, Backbone ) {
         },
         {
           key: 'Horizontal',
+          requiredDimensions: { width: 42, height: 0 },
           start: [0.5, 0.08],
           value: [[0, 0], [0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6], [0, 7],
                   [0, 9], [0, 10], [0, 11], [0, 12], [0, 13],
@@ -68,6 +70,8 @@ function( _, Backbone ) {
       this.maxDelay = 3200;
       this.minDelay = 50;
       this.set('defaultDelay', this.get('delay'));
+      // TODO: Review creation of available patterns. It depeneds on field dimension in setAvailablePatterns.
+      this.set('availablePatterns', this.get('allPatterns'));
     },
 
     setDelay: function(delay) {
@@ -89,6 +93,18 @@ function( _, Backbone ) {
         return p.key === patternKey;
       });
       this.set('pattern', pattern);
+    },
+
+    setAvailablePatterns: function(fieldDimensions) {
+      var availablePatterns = _.filter(this.get('allPatterns'), function(pattern) {
+        if (pattern.requiredDimensions) {
+          return pattern.requiredDimensions.width <= fieldDimensions.width &&
+                 pattern.requiredDimensions.height <= fieldDimensions.height;
+        } else {
+          return true;
+        }
+      });
+      this.set('availablePatterns', availablePatterns);
     },
 
     _canSetDelay: function(delay) {
