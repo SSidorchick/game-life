@@ -254,6 +254,13 @@ module.exports = function (grunt) {
                         'images/{,*/}*.{webp,gif}',
                         'bower_components/requirejs/require.js'
                     ]
+                },
+                {
+                    expand: true,
+                    dot: true,
+                    cwd: '<%= yeoman.app %>/bower_components/font-awesome/',
+                    dest: '<%= yeoman.dist %>',
+                    src: ['fonts/{,*/}*.{eot,svg,ttf,woff}']
                 }]
             }
         },
