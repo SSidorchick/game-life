@@ -1,5 +1,6 @@
 define([
   'jquery',
+  'underscore',
   'backbone',
   'models/controls',
   'collections/field',
@@ -9,7 +10,7 @@ define([
   'views/item/spinner',
   'views/collection/field'
 ],
-function($, Backbone, Controls, Field, AppRegion, MainLayout, ControlsView, SpinnerView, FieldView) {
+function($, _, Backbone, Controls, Field, AppRegion, MainLayout, ControlsView, SpinnerView, FieldView) {
   'use strict';
 
 	return Backbone.Marionette.Controller.extend({
@@ -24,12 +25,12 @@ function($, Backbone, Controls, Field, AppRegion, MainLayout, ControlsView, Spin
       this.controls.setAvailablePatterns(dimensions);
       this._createField(dimensions);
 
-      $(window).on('resize orientationchange', (function() {
+      $(window).on('resize orientationchange', _.debounce((function() {
         // TODO: Remove circular dependency. _getFieldDimensions method should not depend on controls object.
         var dimensions = this._getFieldDimensions();
         this.controls.setAvailablePatterns(dimensions);
         this._createField(dimensions);
-      }).bind(this));
+      }).bind(this), 500));
     },
 
     _createControls: function() {
@@ -54,7 +55,7 @@ function($, Backbone, Controls, Field, AppRegion, MainLayout, ControlsView, Spin
         this.rendering = true;
       }
 
-      setTimeout((function() {
+      _.delay((function() {
         // Pass null model collection, because Field calss generates models by itself.
         this.field = new Field(null, dimensions);
 
@@ -68,7 +69,7 @@ function($, Backbone, Controls, Field, AppRegion, MainLayout, ControlsView, Spin
     _processField: function() {
       if (this.controls.get('running')) {
         this.field.runStep();
-        setTimeout(this._processField.bind(this), this.controls.get('delay'));
+        _.delay(this._processField.bind(this), this.controls.get('delay'));
       }
     },
 
