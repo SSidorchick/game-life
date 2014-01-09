@@ -72,6 +72,7 @@ function( _, Backbone ) {
       this.set('defaultDelay', this.get('delay'));
       // TODO: Review creation of available patterns. It depeneds on field dimension in setAvailablePatterns.
       this.set('availablePatterns', this.get('allPatterns'));
+      this.changePattern('Glider');
     },
 
     setDelay: function(delay) {

@@ -60,6 +60,8 @@ function($, _, Backbone, Controls, Field, AppRegion, MainLayout, ControlsView, S
     _createField: function(dimensions) {
       // Pass null model collection, because Field calss generates models by itself.
       this.field = new Field(null, dimensions);
+      var pattern = this.controls.get('pattern');
+      this.field.changePattern(pattern);
 
       var view = new FieldView({ collection: this.field });
       this.mainLayot.field.show(view);
