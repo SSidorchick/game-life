@@ -20,17 +20,31 @@ function($, _, Backbone, Controls, Field, AppRegion, MainLayout, ControlsView, S
 
       this.spinnerView = new SpinnerView();
       this._createControls();
+      this._resizeField();
+
+      var debouncedResizeField = _.debounce((function() {
+        this._resizeField();
+        this.spinning = false;
+      }).bind(this), 500);
+
+      $(window).on('resize orientationchange', (function() {
+        var dimensions = this._getFieldDimensions();
+        if (this._shouldCreateField(dimensions)) {
+          if (!this.spinning) {
+            this.spinning = true;
+            this.mainLayot.field.show(this.spinnerView);
+          }
+
+          debouncedResizeField();
+        }
+      }).bind(this));
+    },
+
+    _resizeField: function() {
       // TODO: Remove circular dependency. _getFieldDimensions method should not depend on controls object.
       var dimensions = this._getFieldDimensions();
       this.controls.setAvailablePatterns(dimensions);
       this._createField(dimensions);
-
-      $(window).on('resize orientationchange', _.debounce((function() {
-        // TODO: Remove circular dependency. _getFieldDimensions method should not depend on controls object.
-        var dimensions = this._getFieldDimensions();
-        this.controls.setAvailablePatterns(dimensions);
-        this._createField(dimensions);
-      }).bind(this), 500));
     },
 
     _createControls: function() {
@@ -44,26 +58,21 @@ function($, _, Backbone, Controls, Field, AppRegion, MainLayout, ControlsView, S
     },
 
     _createField: function(dimensions) {
+      // Pass null model collection, because Field calss generates models by itself.
+      this.field = new Field(null, dimensions);
+
+      var view = new FieldView({ collection: this.field });
+      this.mainLayot.field.show(view);
+    },
+
+    _shouldCreateField: function(dimensions) {
       if (this.field &&
           this.field.height === dimensions.height &&
           this.field.width === dimensions.width) {
-        return;
+        return false;
+      } else {
+        return true;
       }
-
-      if (!this.rendering) {
-        this.mainLayot.field.show(this.spinnerView);
-        this.rendering = true;
-      }
-
-      _.delay((function() {
-        // Pass null model collection, because Field calss generates models by itself.
-        this.field = new Field(null, dimensions);
-
-        var view = new FieldView({ collection: this.field });
-        this.mainLayot.field.show(view);
-
-        this.rendering = false;
-      }).bind(this), 50); // Settings timeout to let browser render spinner.
     },
 
     _processField: function() {
