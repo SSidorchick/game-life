@@ -156,6 +156,18 @@ module.exports = function (grunt) {
           }
         },
 
+        rev: {
+          dist: {
+            files: {
+              src: [
+                '<%= yeoman.dist %>/scripts/{,*/}*.js',
+                '<%= yeoman.dist %>/styles/{,*/}*.css',
+                '<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}',
+                '<%= yeoman.dist %>/fonts/{,*/}*.*'
+              ]
+            }
+          }
+        },
 
         // require
         requirejs: {
@@ -345,7 +357,6 @@ module.exports = function (grunt) {
         'handlebars',
         'compass:dist',
         'autoprefixer',
-        'connect:testserver',
         'useminPrepare',
         'requirejs',
         'imagemin',
@@ -354,6 +365,7 @@ module.exports = function (grunt) {
         'cssmin',
         'uglify',
         'copy',
+        'rev',
         'usemin'
     ]);
 

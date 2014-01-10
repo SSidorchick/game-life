@@ -35,7 +35,8 @@
     "grunt-exec": "~0.4.2",
     "grunt-contrib-watch": "~0.4.4",
     "time-grunt": "~0.1.1",
-    "grunt-autoprefixer": "~0.6.4"
+    "grunt-autoprefixer": "~0.6.4",
+    "grunt-rev": "~0.1.0"
   },
   "engines": {
     "node": ">=0.8.0"
