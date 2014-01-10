@@ -27,16 +27,18 @@ function($, _, Backbone, Controls, Field, AppRegion, MainLayout, ControlsView, S
         this.spinning = false;
       }).bind(this), 500);
 
-      $(window).on('resize orientationchange', (function() {
+      $(window).on('resize orientationchange', (function(e) {
         var dimensions = this._getFieldDimensions();
-        if (this._shouldCreateField(dimensions)) {
-          if (!this.spinning) {
-            this.spinning = true;
-            this.mainLayot.field.show(this.spinnerView);
-          }
-
-          debouncedResizeField();
+        if (e.type === 'resize' && !this._shouldCreateField(dimensions)) {
+          return;
         }
+
+        if (!this.spinning) {
+          this.spinning = true;
+          this.mainLayot.field.show(this.spinnerView);
+        }
+
+        debouncedResizeField();
       }).bind(this));
     },
 
