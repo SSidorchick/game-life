@@ -148,6 +148,14 @@ module.exports = function (grunt) {
             }
         },
 
+        autoprefixer: {
+          multiple_file: {
+            expand: true,
+            flattern: true,
+            src: '.tmp/styles/{,*/}*.css'
+          }
+        },
+
 
         // require
         requirejs: {
@@ -311,6 +319,7 @@ module.exports = function (grunt) {
         grunt.task.run([
             'clean:server',
             'compass:server',
+            'autoprefixer',
             'copy:server',
             'connect:testserver',
             'express:dev',
@@ -326,6 +335,7 @@ module.exports = function (grunt) {
         'createDefaultTemplate',
         'handlebars',
         'compass',
+        'autoprefixer',
         'connect:testserver',
         'exec:mocha'
     ]);
@@ -334,6 +344,8 @@ module.exports = function (grunt) {
         'createDefaultTemplate',
         'handlebars',
         'compass:dist',
+        'autoprefixer',
+        'connect:testserver',
         'useminPrepare',
         'requirejs',
         'imagemin',
