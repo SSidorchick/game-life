@@ -10,6 +10,7 @@ require.config({
         jquery: '../bower_components/jquery/jquery',
         backbone: '../bower_components/backbone-amd/backbone',
         underscore: '../bower_components/underscore-amd/underscore',
+        spin: '../bower_components/spinjs/spin',
 
         /* backbone plugins */
         'backbone.syphon': '../bower_components/backbone.syphon/lib/amd/backbone.syphon',
@@ -61,8 +62,8 @@ function( $, testSuite ) {
             else {
                 mocha.run();
             }
-            
+
         });
     });
 });
-  
+
