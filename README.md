@@ -7,7 +7,7 @@ Install `bower` and `grunt-cli`
 	
 	$ npm install -g bower grunt-cli
 	
-Install depednecies
+Install dependencies
 
 	$ npm install && bower install
 	
