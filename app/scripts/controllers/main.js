@@ -52,7 +52,7 @@ function($, _, Backbone, Controls, Field, AppRegion, MainLayout, ControlsView, S
     _createControls: function() {
       this.controls = new Controls();
       this.listenTo(this.controls, 'change:running', this._processField.bind(this));
-      this.listenTo(this.controls, 'change:pattern', this._changeFieldPattern.bind(this));
+      this.listenTo(this.controls, 'change:pattern', this._setFieldPattern.bind(this));
       this.listenTo(this.controls, 'action:step-forward', this._stepForward.bind(this));
 
       var view = new ControlsView({ model: this.controls });
@@ -62,8 +62,7 @@ function($, _, Backbone, Controls, Field, AppRegion, MainLayout, ControlsView, S
     _createField: function(dimensions) {
       // Pass null model collection, because Field calss generates models by itself.
       this.field = new Field(null, dimensions);
-      var pattern = this.controls.get('pattern');
-      this.field.changePattern(pattern);
+      this._setFieldPattern();
 
       var view = new FieldView({ collection: this.field });
       this.mainLayot.field.show(view);
@@ -86,9 +85,9 @@ function($, _, Backbone, Controls, Field, AppRegion, MainLayout, ControlsView, S
       }
     },
 
-    _changeFieldPattern: function() {
-      var pattern = this.controls.get('pattern');
+    _setFieldPattern: function() {
       this.controls.set('running', false);
+      var pattern = this.controls.get('pattern');
       this.field.changePattern(pattern);
     },
 
