@@ -40,7 +40,7 @@ function( Backbone, _, Cell ) {
       }
     },
 
-    changePattern: function(pattern) {
+    setPattern: function(pattern) {
       this._resetField();
 
       var startX = Math.floor(pattern.start[1] * this.width);

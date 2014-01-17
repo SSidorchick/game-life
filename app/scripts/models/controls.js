@@ -72,7 +72,6 @@ function( _, Backbone ) {
       this.set('defaultDelay', this.get('delay'));
       // TODO: Review creation of available patterns. It depeneds on field dimension in setAvailablePatterns.
       this.set('availablePatterns', this.get('allPatterns'));
-      this.changePattern('Glider');
     },
 
     setDelay: function(delay) {
@@ -89,11 +88,15 @@ function( _, Backbone ) {
       this.setDelay(this.get('delay') * 2);
     },
 
-    changePattern: function(patternKey) {
+    setPattern: function(patternKey) {
       var pattern = _.find(this.get('availablePatterns'), function(p) {
         return p.key === patternKey;
       });
-      this.set('pattern', pattern);
+
+      // NOTICE: After rotation the default pattern is set.
+      // When it was not changed it should be triggered to be applied for a new field.
+      this.set('pattern', pattern, { silent: true });
+      this.trigger('change:pattern');
     },
 
     setAvailablePatterns: function(fieldDimensions) {

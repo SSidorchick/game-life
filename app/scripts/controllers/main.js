@@ -47,6 +47,7 @@ function($, _, Backbone, Controls, Field, AppRegion, MainLayout, ControlsView, S
       var dimensions = this._getFieldDimensions();
       this.controls.setAvailablePatterns(dimensions);
       this._createField(dimensions);
+      this.controls.setPattern('Glider');
     },
 
     _createControls: function() {
@@ -62,7 +63,6 @@ function($, _, Backbone, Controls, Field, AppRegion, MainLayout, ControlsView, S
     _createField: function(dimensions) {
       // Pass null model collection, because Field calss generates models by itself.
       this.field = new Field(null, dimensions);
-      this._setFieldPattern();
 
       var view = new FieldView({ collection: this.field });
       this.mainLayot.field.show(view);
@@ -88,7 +88,7 @@ function($, _, Backbone, Controls, Field, AppRegion, MainLayout, ControlsView, S
     _setFieldPattern: function() {
       this.controls.set('running', false);
       var pattern = this.controls.get('pattern');
-      this.field.changePattern(pattern);
+      this.field.setPattern(pattern);
     },
 
     _stepForward: function() {

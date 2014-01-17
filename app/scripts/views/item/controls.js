@@ -78,7 +78,7 @@ function( $, Backbone, ControlsTmpl ) {
       e.preventDefault();
 
       var patternKey = this.ui.patterns.children(':selected').text();
-      this.model.changePattern(patternKey);
+      this.model.setPattern(patternKey);
     },
 
     _renderSpeedText: function(defaultDelay, delay) {
