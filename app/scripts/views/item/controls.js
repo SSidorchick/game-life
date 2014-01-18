@@ -38,11 +38,11 @@ function( $, Backbone, ControlsTmpl ) {
       var speedText = this._renderSpeedText(this.model.get('defaultDelay'), this.model.get('delay'));
       this.ui.speed.text(speedText);
 
-      var patterns = this._renderPatterns(this.model.get('availablePatterns'));
+      var patterns = this._renderPatterns(this.model.get('patterns'));
       this.ui.patterns.append(patterns);
       var pattern = this.model.get('pattern');
       if (pattern) {
-        this.ui.patterns.val(pattern.key);
+        this.ui.patterns.val(pattern);
       }
     },
 
@@ -78,7 +78,7 @@ function( $, Backbone, ControlsTmpl ) {
       e.preventDefault();
 
       var patternKey = this.ui.patterns.children(':selected').text();
-      this.model.setPattern(patternKey);
+      this.model.set('pattern', patternKey);
     },
 
     _renderSpeedText: function(defaultDelay, delay) {

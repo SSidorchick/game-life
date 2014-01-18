@@ -20,41 +20,13 @@ function($, _, Backbone, Controls, Field, AppRegion, MainLayout, ControlsView, S
 
       this.spinnerView = new SpinnerView();
       this._createControls();
-      this._resizeField();
+      this._createField(this._getFieldDimensions());
 
-      var debouncedResizeField = _.debounce((function() {
-        this._resizeField();
-        this.spinning = false;
-      }).bind(this), 500);
-
-      $(window).on('resize orientationchange', (function(e) {
-        var dimensions = this._getFieldDimensions();
-        if (e.type === 'resize' && !this._shouldCreateField(dimensions)) {
-          return;
-        }
-
-        if (!this.spinning) {
-          this.spinning = true;
-          this.mainLayot.field.show(this.spinnerView);
-        }
-
-        debouncedResizeField();
-      }).bind(this));
-    },
-
-    _resizeField: function() {
-      // TODO: Remove circular dependency. _getFieldDimensions method should not depend on controls object.
-      var dimensions = this._getFieldDimensions();
-      this.controls.setAvailablePatterns(dimensions);
-      this._createField(dimensions);
-      this.controls.setPattern('Glider');
+      this._handleFieldRecreateEvents();
     },
 
     _createControls: function() {
       this.controls = new Controls();
-      this.listenTo(this.controls, 'change:running', this._processField.bind(this));
-      this.listenTo(this.controls, 'change:pattern', this._setFieldPattern.bind(this));
-      this.listenTo(this.controls, 'action:step-forward', this._stepForward.bind(this));
 
       var view = new ControlsView({ model: this.controls });
       this.mainLayot.controls.show(view);
@@ -66,6 +38,8 @@ function($, _, Backbone, Controls, Field, AppRegion, MainLayout, ControlsView, S
 
       var view = new FieldView({ collection: this.field });
       this.mainLayot.field.show(view);
+
+      this.controls.setField(this.field);
     },
 
     _shouldCreateField: function(dimensions) {
@@ -76,24 +50,6 @@ function($, _, Backbone, Controls, Field, AppRegion, MainLayout, ControlsView, S
       } else {
         return true;
       }
-    },
-
-    _processField: function() {
-      if (this.controls.get('running')) {
-        this.field.runStep();
-        _.delay(this._processField.bind(this), this.controls.get('delay'));
-      }
-    },
-
-    _setFieldPattern: function() {
-      this.controls.set('running', false);
-      var pattern = this.controls.get('pattern');
-      this.field.setPattern(pattern);
-    },
-
-    _stepForward: function() {
-      this.controls.set('running', false);
-      this.field.runStep();
     },
 
     _getFieldDimensions: function() {
@@ -116,6 +72,27 @@ function($, _, Backbone, Controls, Field, AppRegion, MainLayout, ControlsView, S
       } else {
         return cellDimension;
       }
+    },
+
+    _handleFieldRecreateEvents: function() {
+      var debouncedCreateField = _.debounce((function(dimensions) {
+        this._createField(dimensions);
+        this.spinning = false;
+      }).bind(this), 500);
+
+      $(window).on('resize orientationchange', (function(e) {
+        var dimensions = this._getFieldDimensions();
+        if (e.type === 'resize' && !this._shouldCreateField(dimensions)) {
+          return;
+        }
+
+        if (!this.spinning) {
+          this.spinning = true;
+          this.mainLayot.field.show(this.spinnerView);
+        }
+
+        debouncedCreateField(dimensions);
+      }).bind(this));
     }
 	});
 });
