@@ -6,18 +6,17 @@
 	root.define([
 		'regions/app'
 		],
-		function( App ) {
+		function() {
 
 			describe('App Region', function () {
 
-				it('should be an instance of App Region', function () {
-					var app = new App();
-					expect( app ).to.be.an.instanceof( App );
+				it('should be a singleton instance', function () {
+          var app = require('regions/app');
+          app.somePropery = 'some property';
+          var app2 = require('regions/app');
+          app2.somePropery.should.be.equal('some property');
 				});
 
-				it('should have more test written', function(){
-					expect( false ).to.be.ok;
-				});
 			});
 
 		});
