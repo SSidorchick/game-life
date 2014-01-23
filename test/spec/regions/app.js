@@ -3,10 +3,7 @@
 
 	var root = this;
 
-	root.define([
-		'regions/app'
-		],
-		function() {
+	root.define([], function() {
 
 			describe('App Region', function () {
 
