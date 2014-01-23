@@ -24,53 +24,36 @@
 
 				it('should have default attributes', function(){
           root.controls.get('running').should.be.false;
-          root.controls.get('speed').should.equal(500);
+          root.controls.get('delay').should.equal(400);
+          root.controls.get('dimension').should.equal(50);
 				});
 
-				it('should set speed', function(){
+				it('should increase speed', function(){
           var current,
-              maxSpeed = root.controls.maxSpeed,
-              minSpeed = root.controls.minSpeed;
+              minDelay = root.controls.minDelay;
 
-          current = root.controls.get('speed');
-          root.controls.setSpeed(current + 200);
-          root.controls.get('speed').should.equal(current + 200);
+          current = root.controls.get('delay');
+          root.controls.increaseSpeed();
+          root.controls.get('delay').should.equal(current / 2);
 
-          current = root.controls.get('speed');
-          root.controls.setSpeed(maxSpeed - 1);
-          root.controls.get('speed').should.equal(current);
-
-          root.controls.setSpeed(minSpeed + 1);
-          root.controls.get('speed').should.equal(current);
+          current = root.controls.set('delay', minDelay);
+          root.controls.increaseSpeed();
+          root.controls.get('delay').should.equal(minDelay);
 				});
 
-				it('should add speed', function(){
+				it('should decrease speed', function(){
           var current,
-              maxSpeed = root.controls.maxSpeed,
-              speedDelta = root.controls.speedDelta;
+              maxDelay = root.controls.maxDelay;
 
-          current = root.controls.get('speed');
-          root.controls.addSpeed();
-          root.controls.get('speed').should.equal(current - speedDelta);
+          current = root.controls.get('delay');
+          root.controls.decreaseSpeed();
+          root.controls.get('delay').should.equal(current * 2);
 
-          current = root.controls.set('speed', maxSpeed);
-          root.controls.addSpeed();
-          root.controls.get('speed').should.equal(maxSpeed);
+          current = root.controls.set('delay', maxDelay);
+          root.controls.decreaseSpeed();
+          root.controls.get('delay').should.equal(maxDelay);
 				});
 
-				it('should substract speed', function(){
-          var current,
-              minSpeed = root.controls.minSpeed,
-              speedDelta = root.controls.speedDelta;
-
-          current = root.controls.get('speed');
-          root.controls.subSpeed();
-          root.controls.get('speed').should.equal(current + speedDelta);
-
-          current = root.controls.set('speed', minSpeed);
-          root.controls.subSpeed();
-          root.controls.get('speed').should.equal(minSpeed);
-				});
 			});
 
 		});
