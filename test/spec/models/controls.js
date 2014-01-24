@@ -30,7 +30,7 @@
 
 				it('should increase speed', function(){
           var current,
-              minDelay = root.controls.minDelay;
+              minDelay = root.controls.get('minDelay');
 
           current = root.controls.get('delay');
           root.controls.increaseSpeed();
@@ -43,7 +43,7 @@
 
 				it('should decrease speed', function(){
           var current,
-              maxDelay = root.controls.maxDelay;
+              maxDelay = root.controls.get('maxDelay');
 
           current = root.controls.get('delay');
           root.controls.decreaseSpeed();

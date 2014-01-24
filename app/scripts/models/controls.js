@@ -10,12 +10,12 @@ function( _, Backbone, Patterns) {
 		defaults: {
       running: false,
       delay: 400,
+      maxDelay: 3200,
+      minDelay: 50,
       dimension: 50
     },
 
     initialize: function() {
-      this.maxDelay = 3200;
-      this.minDelay = 50;
       this.set('defaultDelay', this.get('delay'));
       this._setPatterns();
 
@@ -71,7 +71,7 @@ function( _, Backbone, Patterns) {
     },
 
     _setDelay: function(delay) {
-      if (delay >= this.minDelay && delay <= this.maxDelay) {
+      if (delay >= this.get('minDelay') && delay <= this.get('maxDelay')) {
         this.set('delay', delay);
       }
     },
