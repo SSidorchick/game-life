@@ -21,7 +21,7 @@
           delete root.model;
         });
 
-				it('should be an instance of Cell Itemview', function () {
+				it('should be an instance of Cell ItemView', function () {
 					root.cell.should.be.an.instanceof(CellView);
 				});
 
