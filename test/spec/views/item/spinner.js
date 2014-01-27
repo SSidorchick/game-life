@@ -8,7 +8,7 @@
     ],
     function( Spinner ) {
 
-      describe('Spinner Itemview', function () {
+      describe('Spinner ItemView', function () {
 
         it('should be an instance of Spinner ItemView', function () {
           var spinner = new Spinner();
