@@ -15,6 +15,8 @@
           expect(main).to.be.an.instanceof(Main);
         });
 
+      });
+
     });
 
 }).call( this );
