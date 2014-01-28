@@ -1,25 +1,22 @@
 (function() {
-	'use strict';
+  'use strict';
 
-	var root = this;
+  var root = this;
 
-	root.define([
-		'controllers/main'
-		],
-		function( Main ) {
+  root.define([
+    'controllers/main'
+    ],
+    function(Main) {
 
-			describe('Main Controller', function () {
+      describe('Main Controller', function () {
 
-				it('should be an instance of Main Controller', function () {
-					var main = new Main();
-					expect( main ).to.be.an.instanceof( Main );
-				});
+        it('should be an instance of Main Controller', function () {
+          var main = new Main();
+          main.should.be.an.instanceof(Main);
+        });
 
-				it('should have more test written', function(){
-					expect( false ).to.be.ok;
-				});
-			});
+      });
 
-		});
+    });
 
 }).call( this );
