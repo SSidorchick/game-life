@@ -1,26 +1,22 @@
 (function() {
-	'use strict';
+  'use strict';
 
-	var root = this;
+  var root = this;
 
-	root.define([
-		'routers/main'
-		],
-		function( Main ) {
+  root.define([
+    'routers/main'
+    ],
+    function(Main) {
 
-			describe('Main Router', function () {
+      describe('Main Router', function () {
 
-				it('should be an instance of Main Router', function () {
-					var main = new Main();
-					main.should.be.an.instanceof(Main);
-				});
-
-        it('should trigger index Main Controllers method when navigate to root', function() {
-          false.should.be.ok;
+        it('should be an instance of Main Router', function () {
+          var main = new Main();
+          main.should.be.an.instanceof(Main);
         });
 
-			});
+      });
 
-		});
+    });
 
-}).call( this );
+}).call(this);
